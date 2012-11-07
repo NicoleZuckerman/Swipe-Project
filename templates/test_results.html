@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Touch result</title>
+
+</head>
+<body>
+
+<h2> Tablet touch/swipe results</h2>
+
+{% for item in swipe_data_objects %}
+<li> X coordinate: {{ item.x }}  Y Coordinate: {{ item.y }} Timestamp: {{ item.timestamp }} </li>
+{% endfor %}
+
+<a href={{url_for("index")}}>Return to swipe page</a>
+</body>
+
+</html>
