@@ -33,6 +33,13 @@ class Datapoint(object):
     def __repr__(self):
         return "DataPoint(%d, %d, %d)" % (self.x, self.y, self.timeStamp)
 
+# in order to get the data back out of the file:
+def get_data_back():
+    f = open('seed_data/swipe_objects.txt')
+    read = f.readline()
+    return_to_dict_form = eval(read)
+
+
 @app.route("/")
 def index():
     return render_template("html_for_touch_test.html")
