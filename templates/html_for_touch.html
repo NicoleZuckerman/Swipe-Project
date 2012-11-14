@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Touch test</title>
+
+<style type="text/css">
+/*            div#canvas {
+                width: 500px;
+                height: 300px;
+                background-color: white;
+                border: 3px solid black;
+            }*/
+</style>
+</head>
+<body>
+<h2> Use swipe for tablet</h2>
+<p> We've mapped out your key locations for you on the screen</p>
+<div id="keyboard data points" style="display: none;"> 
+</div>
+<img id="keyboard" src="/static/img/ipad_keyboard.jpeg" width="790px" height="266px" style="display:none">
+<canvas id="my_canvas" width = "800px" height="276px" style="border:1px solid black">
+</canvas>
+
+
+<div id="swipe_results" style='display: none;'>
+<h2> Tablet touch/swipe results</h2>
+
+<li> Your two letter word is: <span id= "first and last letters"> </span> </li>
+<li> Were we correct? *Note- your answers to this form are not yet stored anywhere. </li>
+<!-- <form action = "PUT URL HERE" method = "post"> -->
+<form>
+<label> Yes
+<input type="checkbox" name="yes"/>
+</label>
+
+<label> No
+<input type="checkbox" name="no"/>
+</label>
+</form>
+
+<p> The letters you crossed over on your path are: <span id= "keys crossed over"></span> </p>
+
+</div>
+
+
+
+<script>
+var kb_data = {{ keyboard|tojson|safe }};
+
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+</script>
+<script type="text/javascript" src="/static/touch_test.js"></script>
+
+<script type="text/javascript" src="/static/display_key_locations.js">
+</script>
+
+<div id="results"></div>
+
+</body>
+
+</html>
