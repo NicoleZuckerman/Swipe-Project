@@ -62,13 +62,13 @@ function end_swipe(evt){
             swipe_and_bigram_from_python = eval(swipe_and_bigram_from_python);            
             start_letter = swipe_and_bigram_from_python[0];
             last_letter = swipe_and_bigram_from_python[1];
-            json_string_data = swipe_and_bigram_from_python[2];
+            smoothed_curve = eval(swipe_and_bigram_from_python[2]);
             letters_crossed = swipe_and_bigram_from_python[3];
-
+            console.log(smoothed_curve[1])
             document.getElementById('swipe_results').style.display = '';
-            document.getElementById('first and last letters').insertAdjacentHTML("afterbegin", start_letter[0] + " " + last_letter[0]);
-            document.getElementById('keys crossed over').insertAdjacentHTML("afterbegin", letters_crossed);
-            draw_swipe = drawDataPoints(json_string_data);
+            document.getElementById('first_and_last_letters').insertAdjacentHTML("afterbegin", start_letter[0] + " " + last_letter[0]);
+            document.getElementById('keys_crossed_over').insertAdjacentHTML("afterbegin", letters_crossed);
+            draw_swipe = drawDataPoints(smoothed_curve);
 
         }
     });
@@ -79,22 +79,19 @@ function drawDataPoints(swipe_dictionary_smoothed){
     var ctx = surface.getContext("2d");
     var img = document.getElementById("keyboard");
     ctx.clearRect(0, 0, 800, 276);
-    alert("These are the points we've collected from your swipe")
 
     ctx.drawImage(img, 0, 0, 800, 276);
-    // alert("These are the points we've collected from your swipe")
+    alert("These are the points we've collected from your swipe")
     ctx.beginPath();
 
     for (var i=0; i < swipe_dictionary_smoothed.length; i++){
         point = swipe_dictionary_smoothed[i]
-        console.log(point);
-
+        // console.log(point.x);
         ctx.moveTo(point.x, point.y);  
-        ctx.arc(point.x, point.y, 2, 0, 0, true);
+        ctx.arc(point.x, point.y, 2, 0, Math.PI*2, true);
         ctx.fill();
     }
     ctx.closePath();
-
 
 }
 

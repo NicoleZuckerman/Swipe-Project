@@ -9,11 +9,40 @@
 
 <h2> Tablet touch/swipe results</h2>
 
-{% for item in swipe_data_objects %}
-<li> X coordinate: {{ item.x }}  Y Coordinate: {{ item.y }} Timestamp: {{ item.timestamp }} </li>
-{% endfor %}
+<li> Your two letter word is: {{ first_letter[0] }}{{ last_letter[0] }} </li>
+<li> We are ____ % confident this is your word.  Were we correct? *Note- your answers to this form are not yet stored anywhere. </li>
+<!-- <form action = "PUT URL HERE" method = "post"> -->
+<form>
+<label> Yes
+<input type="checkbox" name="yes"/>
+</label>
 
-<a href={{url_for("index")}}>Return to swipe page</a>
+<label> No
+<input type="checkbox" name="no"/>
+</label>
+</form>
+<script>
+var path_data_points = {{ swipe_data_objects|tojson|safe }};
+</script>
+<p> The letters you crossed over on your path are: {% for key in key_list %}
+	<li> {{ key }}</li>
+	{% endfor %}
+<h2>Add another word to your swipe sentence</h2>
+
+
+<div id="keyboard data points" style="display: none;"> 
+</div>
+<img id="keyboard" src="/static/img/ipad_keyboard.jpeg" width="790px" height="266px" style="display:none">
+<canvas id="my_canvas" width = "800px" height="276px" style="border:1px solid black">
+</canvas>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+</script>
+<script type="text/javascript" src="/static/touch_test.js"></script>
+
+<script type="text/javascript" src="/static/display_data_points.js"></script>
+
 </body>
 
 </html>

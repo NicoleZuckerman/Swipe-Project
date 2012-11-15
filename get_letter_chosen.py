@@ -6,22 +6,33 @@ def get_data_back(path_for_file):
     returned_to_dict_form = eval(read)
     return returned_to_dict_form
 
-# use curve smoothing to fix user wiggle points (x/y noise)
-# use curve smoothing to fix acceleration over time (timestamp
-# feature to smooth can be x, y, or timestamp
-def curve_smoothing(feature_to_smooth):
-    pass
-    # data_dict = get_data_back('seed_data/swipe_objects.txt')
-    # previous_point = None
-    # for point in data_dict:
-    #     value = point['feature_to_smooth']
+def curve_smoothing():
+    data_dicts = get_data_back('seed_data/swipe_objects.txt')
+    smoothed_points = []
+    first_point = data_dicts[0]
+    smoothed_points.append(first_point)
+    i = 1
+    end = len(data_dicts) - 1
+    smoothed_point = {}
 
-    #     smoothed_point = feature_to_smooth
+    while i < end:
+        previous_point = data_dicts[i - 1]
+        next_point = data_dicts[i + 1]
+        current_point = data_dicts[i]
+        smoothed_x = (current_point['x']  + previous_point['x'] + next_point['x']) / 3
+        smoothed_y = (current_point['y']  + previous_point['y'] + next_point['y']) / 3
+        timestamp = current_point['timestamp']
+        smoothed_points.append(smoothed_point)
+        i = i + 1
+        smoothed_point = {'x': smoothed_x, 'y': smoothed_y, 'timestamp': timestamp}
+    last_point = data_dicts[-1]
+    smoothed_points.append(last_point)
+    return smoothed_points
 
 def letters_path_crosses():
-    data_dict = get_data_back('seed_data/swipe_objects.txt')
+    data_dicts = get_data_back('seed_data/swipe_objects.txt')
     letters_crossed = []
-    for point in data_dict:
+    for point in data_dicts:
         best_letter_guess = closest_letter(point)
         letter = best_letter_guess[0]
         if len(letters_crossed) == 0:
@@ -38,7 +49,6 @@ def starting_letter():
     #this may not be necessary because  the list is ordered already
     swipe_in_time_order = sorted(swipe_objects, key=lambda x: x['timestamp'])
     first_point = swipe_in_time_order[0]
-    print first_point
     first_letter = closest_letter(first_point)
     return first_letter
 
@@ -48,7 +58,6 @@ def ending_letter():
     #this may not be necessary because  the list is ordered already
     swipe_in_time_order = sorted(swipe_objects, key=lambda x: x['timestamp'])
     ending_point = swipe_in_time_order[-1]
-    print ending_point
     last_letter = closest_letter(ending_point)
     return last_letter
 

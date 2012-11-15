@@ -42,11 +42,11 @@ def results_of_swipe():
     first_letter = two_letters[0]
     last_letter = two_letters[-1]
     letters_crossed = get_letter_chosen.letters_path_crosses()
+    smoothed_curve = get_letter_chosen.curve_smoothing()
     f.close()
 
-    stuff_to_give_to_javascript = json.dumps([first_letter, last_letter, json_string_data, letters_crossed])
+    stuff_to_give_to_javascript = json.dumps([first_letter, last_letter, smoothed_curve, letters_crossed])
     return stuff_to_give_to_javascript
-    # return redirect(url_for("index"))
 
 @app.route("/your_calibrations", methods=["POST"])
 def results_of_calibration():
