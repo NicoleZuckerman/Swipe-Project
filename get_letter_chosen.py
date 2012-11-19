@@ -1,4 +1,4 @@
-from math import pow, cos
+from math import *
 def get_data_back(path_for_file):
     f = open(path_for_file)
     read = f.read()
@@ -36,9 +36,9 @@ def curve_smoothing():
     return smoothed_points
 
 def letters_path_crosses():
-    data_dicts = get_data_back('seed_data/swipe_objects.txt')
+    smooth_data_dicts = curve_smoothing()
     letters_crossed = []
-    for point in data_dicts:
+    for point in smooth_data_dicts:
         best_letter_guess = closest_letter(point)
         letter = best_letter_guess[0]
         if len(letters_crossed) == 0:
@@ -74,59 +74,88 @@ def guess_bigram():
     return letters
     # return bigram, make sure you send it to the browser
 
-def vertex_points_by_change_in_slope():
+def get_vector_list():
     smoothed_curve = curve_smoothing()
-    points_of_change = []
-    # i is 1 because we don't need to check the first point, we know it's an inflection already
-    i = 1
-    end = len(smoothed_curve) - 1
-    point_of_change = {}
+    i = 0
+    end = len(smoothed_curve)-1
+    vector_list = []
 
     while i < end:
-        previous_point = smoothed_curve[i - 1]
         next_point = smoothed_curve[i + 1]
         current_point = smoothed_curve[i]
-        # print current_point
-        rise1 = float(current_point['y'] - previous_point['y'])
-        print "This is current y : %r" % current_point['y']
-        print "This is previous y: %r" % previous_point['y']
-
-        print "This is rise 1: %d" % rise1
-
-        rise2 = float(next_point['y'] - current_point['y'])
-        print "This is rise 2: %d" % rise2
-
-        run1 = float(current_point['x'] - previous_point['x'])
-        print "This is run 1: %d" % run1
-
-        run2 = float(next_point['x'] - current_point['x'])
-        print "This is run 2: %d" % run2
-
-        try: 
-            slope1 = float(rise1 / run1)
-            print "This is slope 1: %d" % slope1
-        except ZeroDivisionError:
-            slope1 = "undefined"
-            print "This is slope 1: %s" % slope1
-
-        try:
-            slope2 = float(rise2 / run2)
-            print "This is slope 2: %d" % slope2
-        except ZeroDivisionError:
-            slope1 = "undefined"
-            print "This is slope 2: %s" % slope2
-        # if slope is undefined, what do I do then?
-        # points_of_change.append(current_point)
-        # if the difference between the slopes is non-trivial, 
-        # record current point in the list of points of change. We'll get that letter later
-
+        vector1x = float(next_point['x'] - current_point['x'])
+        vector1y = float(next_point['y'] - current_point['y'])
+        # print "current x: %d next x: %d current y: %d next y: %d" % (current_point['x'], next_point['x'], current_point['y'], next_point['y'])
+        # print "This is the diff between xes: %d and ys %d" % (vector1x, vector1y)
+        
+        vector_magnitude = float(sqrt(vector1x**2 + vector1y**2))
+        timestamp = current_point['timestamp']
+        # print "This is the vector magnitude: %r and these are the timestamps %r" % (vector_magnitude, timestamps)
+        unitx = vector1x / vector_magnitude
+        unity = vector1y / vector_magnitude
+        # print "This is unitx: %d and this is unity: %d" % (unitx, unity)
+        unit_vector = (unitx, unity, timestamp)
+        # print "This is the unit vector: %r" % unit_vector
+        vector_list.append(unit_vector)
         i = i + 1
-    # points_of_change.append(last_point)
-    # error margin- what makes it non-trivial? 15 degrees? 20 degrees?
-    # get tangents
-# do_it = get_all_vertex_points()
+    # print vector_list
+    return vector_list
 
+def get_thetas():
+    vectors = get_vector_list()
+    i = 0
+    end = len(vectors) - 1
+    list_of_thetas_and_time = []
+    list_of_angles = []
+    list_of_start_times = []
 
+    while i < end:
+        current_vector = vectors[i]
+        next_vector = vectors[i+1]
+        x1 = current_vector[0]
+        y1 = current_vector[1]
+        x2 = next_vector[0]
+        y2 = next_vector[1]
+        # print 'CURRENT vector x: %r current vector y: %r next vector x: %r next vector y: %r' % (x1, y1, x2, y2)
+        start_time = current_vector[2]
+        # list_of_start_times.append(start_time)
+        # print start_time
+
+        cos_of_the_angle = x1*x2 + y1*y2
+        angle_in_radians = acos(cos_of_the_angle)
+        angle_in_degrees = angle_in_radians * 180 / pi
+        # list_of_angles.append(angle_in_degrees)
+        # print "radians: %s degrees: %r" % (angle_in_radians, angle_in_degrees)
+        # print angle_in_degrees
+        angle_info = [start_time, angle_in_degrees]
+        list_of_thetas_and_time.append(angle_info)
+        i = i + 1
+    # print list_of_start_times
+    # print list_of_angles
+    # print list_of_thetas_and_time
+    return list_of_thetas_and_time
+
+def get_change_points():
+    time_comma_angle_list = get_thetas()
+    list_of_change_points = []
+    for item in time_comma_angle_list:
+        if item[1] > 11:
+            list_of_change_points.append(item)
+    print list_of_change_points
+    return list_of_change_points
+
+# def get_change_point_letters():
+#     change_points_and_letter = []
+#     data_dicts = get_data_back('seed_data/swipe_objects.txt')
+#     for item in list_of_change_points:
+    # letter = closest_letter(chosen_point)
+
+    # get the derivative of theta on a graph
+    # see places where it spikes- those are vertices
+    # the center of these vertices should be approx the point
+    # the letter is one of 7 keys around that point.
+    # get the word permutations of each. Save in a list or something.
+    # check each of those against the dictionary
 def is_it_a_word(bigram):
     pass
     # check dictionary
