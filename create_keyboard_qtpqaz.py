@@ -31,8 +31,8 @@ def q_location():
     training_keys = get_key_center()
     q1 = training_keys[0]
     q2 = training_keys[3]
-    average_q_x = (q1['x'] + q2['x'])/2
-    average_q_y = (q1['y'] + q2['y'])/2
+    average_q_x = float((q1['x'] + q2['x'])/2)
+    average_q_y = float((q1['y'] + q2['y'])/2)
     q = {'letter':'q', 'x':average_q_x, 'y':average_q_y}
     return q
 
@@ -49,12 +49,12 @@ def keyboard_map():
     row_2 = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
     row_3 = ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'shift']
 
-    full_spread_average = (p['x'] - q['x']) / 9
-    four_key_spread_average = (t['x'] - q['x']) / 4
+    full_spread_average = float((p['x'] - q['x']) / 9)
+    four_key_spread_average = float((t['x'] - q['x']) / 4)
     horizontal_key_distance = (full_spread_average + four_key_spread_average) / 2
-    vertical_key_distance = ((z['y'] - a['y']) + (a['y'] - q['y'])) / 2
+    vertical_key_distance = float(((z['y'] - a['y']) + (a['y'] - q['y'])) / 2)
     
-    average_row_1_y = (q['y'] + t['y'] + p['y']) / 3
+    average_row_1_y = float((q['y'] + t['y'] + p['y']) / 3)
     average_row_2_y = average_row_1_y + vertical_key_distance
     average_row_3_y = average_row_2_y + vertical_key_distance
 

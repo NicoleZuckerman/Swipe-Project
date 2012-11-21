@@ -63,11 +63,11 @@ function end_swipe(evt){
     console.log(letter_data)
     if (characters_checked.length === 0){
         alert("Thanks! We've calibrated the keyboard for you.")
-        for_charles = JSON.stringify(letter_data);
+        JSON_Data = JSON.stringify(letter_data);
         send_json_file = $.ajax({
             type: 'POST',
             url: '/your_calibrations',
-            data: {'data': for_charles},
+            data: {'data': JSON_Data},
             success: function(){
                 window.location.href = ("/");
             }

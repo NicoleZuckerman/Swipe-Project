@@ -1,3 +1,6 @@
+from decimal import *
+getcontext().prec = 7
+
 def get_data_back(path_for_file):
     f = open(path_for_file)
     read = f.read()
@@ -21,8 +24,10 @@ def get_key_center():
             xvalues.append(coordinate[0])
             yvalues.append(coordinate[1])
 
-        average_x = float(sum(xvalues)/len(xvalues))
-        average_y = float(sum(yvalues)/len(yvalues))
+        average_x = Decimal(sum(xvalues)/len(xvalues))
+        average_y = Decimal(sum(yvalues)/len(yvalues))
+        print average_x.__class__
+        # print letter['y'].__class__
         key_location = {'letter':letter, 'x':average_x, 'y':average_y}
         key_center_list.append(key_location)
     return key_center_list
@@ -31,8 +36,8 @@ def q_location():
     training_keys = get_key_center()
     q1 = training_keys[0]
     q2 = training_keys[3]
-    average_q_x = (q1['x'] + q2['x'])/2
-    average_q_y = (q1['y'] + q2['y'])/2
+    average_q_x = Decimal((q1['x'] + q2['x'])/2)
+    average_q_y = Decimal((q1['y'] + q2['y'])/2)
     q = {'letter':'q', 'x':average_q_x, 'y':average_q_y}
     return q
 
@@ -49,10 +54,10 @@ def keyboard_map():
     
     keyboard = [q, w, e, a, z]
 
-    horizontal_key_distance = ((w['x'] - q['x']) + (e['x'] - w['x'])) / 2
-    vertical_key_distance = ((z['y'] - a['y']) + (a['y'] - q['y'])) / 2
+    horizontal_key_distance = Decimal(((w['x'] - q['x']) + (e['x'] - w['x'])) / 2)
+    vertical_key_distance = Decimal(((z['y'] - a['y']) + (a['y'] - q['y'])) / 2)
     
-    average_row_1_y = (q['y'] + w['y'] + e['y']) / 3
+    average_row_1_y = Decimal((q['y'] + w['y'] + e['y']) / 3)
     average_row_2_y = average_row_1_y + vertical_key_distance
     average_row_3_y = average_row_2_y + vertical_key_distance
 
@@ -91,3 +96,4 @@ def keyboard_map():
     f.close()
     return keyboard
     ##### note--- i'll have to account for the spacebar somehow.
+do_it = keyboard_map()

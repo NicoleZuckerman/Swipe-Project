@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, flash, redirect, url_for, req
 import json
 # from flask_heroku import Heroku
 import os
-from skaffold import Skaffold
+# from skaffold import Skaffold
 import create_keyboard_qtpqaz
 import get_letter_chosen
 
@@ -16,7 +16,7 @@ app.config.from_object(__name__)
 
 @app.route("/")
 def index():
-    keyboard = create_keyboard_qtpqaz.keyboard_map()
+    keyboard = json.dumps(create_keyboard_qtpqaz.keyboard_map())
     return render_template("html_for_touch.html", keyboard=keyboard)
 
 # @app.route("/word")
@@ -37,15 +37,17 @@ def results_of_swipe():
     string_objects = str(swipe_data_objects)
     f.write(string_objects)
     f.close()
+    word = get_letter_chosen.put_word_together()
 
-    two_letters = get_letter_chosen.guess_bigram()
-    first_letter = two_letters[0]
-    last_letter = two_letters[-1]
-    letters_crossed = get_letter_chosen.letters_path_crosses()
-    smoothed_curve = get_letter_chosen.curve_smoothing()
+    # two_letters = get_letter_chosen.guess_bigram()
+    # first_letter = two_letters[0]
+    # last_letter = two_letters[-1]
+    # letters_crossed = get_letter_chosen.letters_path_crosses()
+    # smoothed_curve = get_letter_chosen.curve_smoothing()
     f.close()
 
-    stuff_to_give_to_javascript = json.dumps([first_letter, last_letter, smoothed_curve, letters_crossed])
+    # stuff_to_give_to_javascript = json.dumps([first_letter, last_letter, swipe_data_objects, letters_crossed]) # swapped smoothed_curve for swipe_data_objects
+    stuff_to_give_to_javascript = json.dumps([word, swipe_data_objects]) 
     return stuff_to_give_to_javascript
 
 @app.route("/your_calibrations", methods=["POST"])

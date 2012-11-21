@@ -21,7 +21,7 @@
 <div id="swipe_results" style='display: none;'>
 	<h2> Tablet touch/swipe results</h2>
 
-	<li> Your two letter word is: <span id= "first_and_last_letters"> </span> </li>
+	<li> Your word is <span id= "word"> </span> </li>
 	<li> Were we correct? *Note- your answers to this form are not yet stored anywhere. </li>
 	<!-- <form action = "PUT URL HERE" method = "post"> -->
 	<form>
@@ -34,14 +34,13 @@
 	</label>
 	</form>
 
-	<p> The letters you crossed over on your path are: <span id= "keys_crossed_over"></span> </p>
 </div>
 
 
 
 <script>
-var kb_data = {{ keyboard|tojson|safe }};
-
+// var kb_data = {{ keyboard|tojson|safe }};
+var kb_data = {{ keyboard|safe }};
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
