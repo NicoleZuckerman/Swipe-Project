@@ -5,6 +5,7 @@ import os
 # from skaffold import Skaffold
 import create_keyboard_qtpqaz
 import get_letter_chosen
+import spell_checker
 
 app = Flask(__name__)
 # heroku = Heroku(app)
@@ -19,15 +20,6 @@ def index():
     keyboard = json.dumps(create_keyboard_qtpqaz.keyboard_map())
     return render_template("html_for_touch.html", keyboard=keyboard)
 
-# @app.route("/word")
-# def word_chosen():
-#     f = open('seed_data/swipe_objects.txt', 'w')
-#     two_letters = get_letter_chosen.guess_bigram()
-#     first_letter = two_letters[0]
-#     last_letter = two_letters[-1]
-#     keyboard = create_keyboard_qtpqaz.keyboard_map()
-#     return render_template("test_results.html", keyboard=keyboard, first_letter=first_letter, last_letter=last_letter,)
-
 @app.route("/your_swipe", methods=["POST"])
 def results_of_swipe():
     json_string_data = request.form['data']
@@ -37,16 +29,10 @@ def results_of_swipe():
     string_objects = str(swipe_data_objects)
     f.write(string_objects)
     f.close()
-    word = get_letter_chosen.put_word_together()
+    pre_spell_check = get_letter_chosen.put_word_together()
+    word = spell_checker.suggested_correction(pre_spell_check)
 
-    # two_letters = get_letter_chosen.guess_bigram()
-    # first_letter = two_letters[0]
-    # last_letter = two_letters[-1]
-    # letters_crossed = get_letter_chosen.letters_path_crosses()
     # smoothed_curve = get_letter_chosen.curve_smoothing()
-    f.close()
-
-    # stuff_to_give_to_javascript = json.dumps([first_letter, last_letter, swipe_data_objects, letters_crossed]) # swapped smoothed_curve for swipe_data_objects
     stuff_to_give_to_javascript = json.dumps([word, swipe_data_objects]) 
     return stuff_to_give_to_javascript
 

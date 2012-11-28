@@ -58,21 +58,13 @@ function end_swipe(evt){
         type: 'POST',
         url: '/your_swipe',
         data: {'data': JSON.stringify(swipe_info)},
-        success: function(swipe_and_bigram_from_python, textStatus, jqXHR){
-            swipe_and_bigram_from_python = eval(swipe_and_bigram_from_python);            
-            // start_letter = swipe_and_bigram_from_python[0];
-            // last_letter = swipe_and_bigram_from_python[1];
-            swipe_points = swipe_and_bigram_from_python[1];
-            word = swipe_and_bigram_from_python[0]
-            // letters_crossed = swipe_and_bigram_from_python[3];
-            // console.log(smoothed_curve[1])
+        success: function(swipe_and_word_from_python, textStatus, jqXHR){
+            swipe_and_word_from_python = eval(swipe_and_word_from_python);            
+            swipe_points = swipe_and_word_from_python[1];
+            word = swipe_and_word_from_python[0]
             document.getElementById('swipe_results').style.display = '';
-            // document.getElementById('first_and_last_letters').insertAdjacentHTML("afterbegin", start_letter[0] + " " + last_letter[0]);
             document.getElementById('word').insertAdjacentHTML("afterbegin", word);
-
-            // document.getElementById('keys_crossed_over').insertAdjacentHTML("afterbegin", letters_crossed);
             draw_swipe = drawDataPoints(swipe_points);
-
         }
     });
 

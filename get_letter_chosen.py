@@ -34,13 +34,7 @@ def closest_letter(chosen_point):
     best_distance = 1,000
     choice_letter = None
     for letter in keyboard:
-    # which point is closest to the chosen point of the bigram?
-        # print chosen_point['x'].__class__
-        # print chosen_point['y'].__class__
-
-        # print letter['x'].__class__
-        # print letter['y'].__class__
-
+    # which key center is closest?
         distance = pow((chosen_point['x'] - letter['x']), 2) + pow((chosen_point['y'] - letter['y']), 2)
         if distance < best_distance:
             best_distance = distance
@@ -200,7 +194,7 @@ def get_thetas():
         i = i + 1
     # print list_of_start_times
     # print list_of_angles
-    # print list_of_thetas_and_time
+    print list_of_thetas_and_time
     return vectors_angles_xs_ys_timestamps
 
 def get_change_points():
@@ -211,7 +205,7 @@ def get_change_points():
     peak = None
 
     for item in time_comma_angle_list:
-        if item['angle'] > 15 and item['angle'] > max_angle:
+        if item['angle'] > 20 and item['angle'] > max_angle:
             max_angle = item['angle']
             peak = item
             # print "this angle was greater than 15 and greater than max %r" % max_angle
@@ -250,36 +244,24 @@ def put_word_together():
     letter_data = [start]
     end = ending_letter()
     end_letter = end[0]
+    # print "start letter: %r end letter: %r" % (start_letter, end_letter)
     for point in letter_and_point_data:
         letter_info = point[0]
         letter = letter_info[0]
         if letter != letters[-1]: 
             letters.extend(letter)
             letter_data.extend(letter_info)
-        elif letters[-1] == letter:
+        elif letter == letters[-1]:
             continue
-    letter_data.extend(end)
-    letters.extend(end_letter)
+    if letters[-1] != end_letter:
+        letter_data.extend(end)
+        letters.extend(end_letter)
     # print letters
     word = "".join(letters)
     print word
     return word
+
+
 # if the user looped on a letter (LL, OO, EE, RR, TT, PP, SS, DD, FF, GG, CC, BB, NN, MM)
 # add the double letter back in-- 
 # look at timestamps and if the user was on that letter 2x as long as usual for the swipe.
-
-    # the letter is actually one of 7 keys around that point.
-    # get the word permutations of each. Save in a list or something.
-    # check each of those against the dictionary
-def is_it_a_word(bigram):
-    pass
-    # check dictionary
-    # number of vertex points (plus start and end) indicates minimum number of letters
-    # is there a word there already?
-    # if not, run other function to get slow-down points, or use edit distance, etc
-
-
- # figure out which keys fall within a certain
- # margin of error of the value- if you find one that's relatively close, you
- # don't need to check the keys all the way across the board.  That way is
- # a lot more code though.
