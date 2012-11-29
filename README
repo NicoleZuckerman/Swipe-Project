@@ -1,0 +1,9 @@
+A Swipe implementation, in-browser
+
+In CLI:
+python flask_for_touch_test.py
+
+If using browser on mobile device (where swipe works best, in this case), make sure your mobile device is on the same network.
+
+in browser on computer: http://localhost:5000/
+in browser on mobile device: IP:5000
