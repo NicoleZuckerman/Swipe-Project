@@ -12,6 +12,11 @@ def word_count(path_for_file):
     for word in cleaned_words:
         word_dict[word] = word_dict.get(word, 0) + 1
     f.close()
+    # dict_file = open("seed_data/ENGLISH.txt", 'w')
+    # for key in word_dict.keys():
+    #     dict_entry = "%s \t %d \n" % (key, word_dict[key])
+    #     write = dict_file.write(dict_entry)
+    # dict_file.close()
     return word_dict
 
 def clean_words(lowercased_text):
@@ -24,33 +29,32 @@ def clean_words(lowercased_text):
 
 ENGLISH_DICTIONARY = word_count("seed_data/words.txt")
 
-def dict_to_tuple_list():
-    key_value_list = []
+# def dict_to_tuple_list():
+#     key_value_list = []
     
-    for key, value in ENGLISH_DICTIONARY.iteritems():
-        paired_info = (key, value)
-        key_value_list.append(paired_info)
-    # print key_value_list
+#     for key, value in ENGLISH_DICTIONARY.iteritems():
+#         paired_info = (key, value)
+#         key_value_list.append(paired_info)
+#     # print key_value_list
     
-    return key_value_list
+#     return key_value_list
 
-def order_by_occurance():
-    paired_list = dict_to_tuple_list()
-    occurance_word_list = []
+# def order_by_occurance():
+#     paired_list = dict_to_tuple_list()
+#     occurance_word_list = []
     
-    for item in paired_list:
-        reversed_pair = (item[1], item[0])
-        occurance_word_list.append(reversed_pair)
+#     for item in paired_list:
+#         reversed_pair = (item[1], item[0])
+#         occurance_word_list.append(reversed_pair)
     
-    low_to_high_ordered = occurance_word_list.sort()
-    high_to_low_ordered = occurance_word_list.reverse()
-    # print occurance_word_list
-    for word in occurance_word_list:
-        print "%d: \t%s \n" % (word[0], word[1])
-    f = open("seed_data/ENGLISH.txt")
-    f.write(occurance_word_list)
-    f.close()
-    return occurance_word_list
+#     low_to_high_ordered = occurance_word_list.sort()
+#     high_to_low_ordered = occurance_word_list.reverse()
+#     # print occurance_word_list
+#     # f = open("seed_data/ENGLISH.txt", 'w')
+
+#     for word in occurance_word_list:
+#         print "%d: \t%s \n" % (word[0], word[1])
+#     return occurance_word_list
 
 # def keyboard_conversion():
 #     keyboard = get_data_back('seed_data/user_keyboard.txt')
@@ -120,26 +124,26 @@ def edit_distance1(word):
                 replaces.append(word)
     return set(deletes + replaces + inserts)
 
-def get_english_dictionary():
-    f = open("seed_data/ENGLISH.txt")
-    read = f.read()
-    ENGLISH_DICTIONARY = eval(read)
-    return ENGLISH_DICTIONARY
+# def get_english_dictionary():
+#     f = open("seed_data/ENGLISH.txt")
+#     read = f.read()
+#     ENGLISH_DICTIONARY = eval(read)
+#     return ENGLISH_DICTIONARY
+
 def real_words_edit_dist2(word):
-    ENGLISH_DICTIONARY = get_english_dictionary()
-    return set(edit_dist_2 for edit_dist_1 in edit_distance1(word) for edit_dist_2 in edit_distance1(edit_dist_1) if edit_dist_2 in ENGLISH_DICTIONARY)
+    # ENGLISH_DICTIONARY = get_english_dictionary()
+    return set(edit_dist_2 for edit_dist_1 in edit_distance1(word) for edit_dist_2 in edit_distance1(edit_dist_1) if ENGLISH_DICTIONARY.get(edit_dist_2))
 
 def suggested_correction(word):
-    ENGLISH_DICTIONARY = get_english_dictionary()
-    if word in ENGLISH_DICTIONARY:
+    if ENGLISH_DICTIONARY.get(word):
         return word
     else:
         edit_dist_1 = edit_distance1(word)
-        potential_words_1 = [word for word in edit_dist_1 if word in ENGLISH_DICTIONARY]
-        potential_words_1.extend(real_words_edit_dist2(word))
+        potential_words = [word for word in edit_dist_1 if ENGLISH_DICTIONARY.get(word)]
+        potential_words.extend(real_words_edit_dist2(word))
         best_guess = None
         selected_word = None
-        for word in potential_words_1:
+        for word in potential_words:
             value = ENGLISH_DICTIONARY[word]
             if value > best_guess:
                 best_guess = value
