@@ -45,9 +45,9 @@ def keyboard_map():
     z = training_keys[5]
     keyboard = [q, t, p, a, z]
 
-    row_1 = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'backspace']
+    row_1 = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
     row_2 = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
-    row_3 = ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'shift']
+    row_3 = ['z', 'x', 'c', 'v', 'b', 'n', 'm']
 
     full_spread_average = float((p['x'] - q['x']) / 9)
     four_key_spread_average = float((t['x'] - q['x']) / 4)

@@ -8,7 +8,7 @@ var letter_area = [];
 
 var characters_checked = ['q', 't', 'p', 'q', 'a', 'z'];
 
-alert("Please press the 'q' key, then 't', then 'p', followed by 'q', 'a', and 'z'.");
+alert("Please press the 'q' key, then 't', then 'p'.")
 
 
 surface.addEventListener("touchstart", start_swipe, false);
@@ -61,6 +61,9 @@ function end_swipe(evt){
     var calibrated_letter = [letter, letter_area];
     letter_data.push(calibrated_letter);
     console.log(letter_data)
+    if (characters_checked.length == 3){
+        alert("Great!  Now please press'q', 'a', and 'z'.");
+    }
     if (characters_checked.length === 0){
         alert("Thanks! We've calibrated the keyboard for you.")
         JSON_Data = JSON.stringify(letter_data);

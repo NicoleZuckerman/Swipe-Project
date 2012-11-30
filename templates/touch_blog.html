@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>DO THE WIGGLE</title>
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1> Swipe</h1>
+    <p> Sapiente put a bird on it fugiat officia sriracha stumptown ennui, jean shorts post-ironic. Veniam 8-bit terry richardson umami mustache, pork belly forage yr squid banksy laborum ethical. Fixie organic quinoa cupidatat blog ut. Ut velit skateboard, magna iphone organic minim high life mcsweeney's eu. Officia retro ea cosby sweater sapiente, PBR tumblr organic williamsburg commodo nesciunt 3 wolf moon duis do. Single-origin coffee laboris ad, stumptown PBR wolf brunch messenger bag irony cray tumblr pour-over pitchfork Austin. Farm-to-table occupy laboris banh mi aliquip, lomo fanny pack forage polaroid tumblr 3 wolf moon.
+    </p>
+    <h3 class="comment_title">Test it out yourself!</h3>
+    <div id="swipe_results" class="comment" onclick="add_keyboard()">
+    	<p><span id="word">Tap here to start typing.</span></p>
+    </div>
+
+    <div id="keyboard_container">
+	    <div id="keyboard_data_points" style="display: none;"></div>
+		<img id="keyboard" src="/static/img/ipad_keyboard.jpeg" width="790px" height="266px" style="display: none;">
+		<canvas id="my_canvas" width="800px" height="276px" style="border:1px solid black"></canvas>
+	</div>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="/static/touch_test.js"></script>
+	
+	<script type="text/javascript">
+		function add_keyboard(){
+			$("#word").html("");
+			$("#keyboard_container").addClass("show");
+			$(".comment").addClass("active")
+		}
+	</script>
+</body>
+
+</html>

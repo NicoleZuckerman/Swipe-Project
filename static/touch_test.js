@@ -1,10 +1,11 @@
 
 var swipe_info = [];
+var img = document.getElementById("keyboard");
+
 var surface = document.getElementById("my_canvas");
 var ctx = surface.getContext("2d");
-var img = document.getElementById("keyboard");
-ctx.drawImage(img, 0, 0, 800, 276);
 
+ctx.drawImage(img, 0, 0, 800, 276);
 
 function normalize(touch, timestamp) {
     var x_delta = touch.target.offsetLeft;
@@ -18,6 +19,7 @@ function normalize(touch, timestamp) {
 }
 
 function start_swipe(evt){
+    swipe_info = []
     ctx = surface.getContext("2d");
 
     evt.preventDefault();
@@ -50,10 +52,6 @@ function end_swipe(evt){
     evt.preventDefault();
     ctx.closePath();
 
-    // for (var i=0; i < swipe_info.length; i++) {
-    //  document.getElementById("results").insertAdjacentHTML("afterbegin", "<p>X-coord: " + swipe_info[i].x + " Y-coord: " + swipe_info[i].y + " Time: " + swipe_info[i].timestamp + "</p>");
-    // }
-
     send_json_file = $.ajax({
         type: 'POST',
         url: '/your_swipe',
@@ -63,7 +61,7 @@ function end_swipe(evt){
             swipe_points = swipe_and_word_from_python[1];
             word = swipe_and_word_from_python[0]
             document.getElementById('swipe_results').style.display = '';
-            document.getElementById('word').insertAdjacentHTML("afterbegin", word);
+            document.getElementById('word').innerHTML=word;
             draw_swipe = drawDataPoints(swipe_points);
         }
     });
@@ -76,7 +74,7 @@ function drawDataPoints(swipe_dictionary_smoothed){
     ctx.clearRect(0, 0, 800, 276);
 
     ctx.drawImage(img, 0, 0, 800, 276);
-    alert("These are the points we've collected from your swipe")
+    // alert("These are the points we've collected from your swipe")
     ctx.beginPath();
 
     for (var i=0; i < swipe_dictionary_smoothed.length; i++){

@@ -27,7 +27,7 @@ def clean_words(lowercased_text):
     cleaned_words = cleaned_text.split()
     return cleaned_words
 
-ENGLISH_DICTIONARY = word_count("seed_data/words.txt")
+# ENGLISH_DICTIONARY = word_count("seed_data/words.txt")
 
 # def dict_to_tuple_list():
 #     key_value_list = []
@@ -97,6 +97,15 @@ ENGLISH_DICTIONARY = word_count("seed_data/words.txt")
 #         list_of_letter_options.append(choice[1])
 #     letters_within_one_key = " ".join(list_of_letter_options)
 #     return letters_within_one_key
+def read_dictionary():
+    f = open("seed_data/ENGLISH.txt")
+    lines = f.readlines()
+    ENGLISH_DICTIONARY = {}
+    for line in lines:
+        word = line.split()
+        ENGLISH_DICTIONARY[word[0]] = word[1]
+    return ENGLISH_DICTIONARY
+ENGLISH_DICTIONARY = read_dictionary()
 
 def edit_distance1(word):
     nearest_letters = {'q' : 'wa', 'w' : 'esaq', 'e' : 'rdsw', 'r' : 'tfde', 't' : 'ygfr', 
@@ -131,7 +140,6 @@ def edit_distance1(word):
 #     return ENGLISH_DICTIONARY
 
 def real_words_edit_dist2(word):
-    # ENGLISH_DICTIONARY = get_english_dictionary()
     return set(edit_dist_2 for edit_dist_1 in edit_distance1(word) for edit_dist_2 in edit_distance1(edit_dist_1) if ENGLISH_DICTIONARY.get(edit_dist_2))
 
 def suggested_correction(word):
@@ -148,4 +156,6 @@ def suggested_correction(word):
             if value > best_guess:
                 best_guess = value
                 selected_word = word
+        if selected_word == None:
+            selected_word = 'Unknown'
         return selected_word
