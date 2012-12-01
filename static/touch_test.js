@@ -4,7 +4,7 @@ var img = document.getElementById("keyboard");
 
 var surface = document.getElementById("my_canvas");
 var ctx = surface.getContext("2d");
-
+alert("keyboard")
 ctx.drawImage(img, 0, 0, 800, 276);
 
 function normalize(touch, timestamp) {

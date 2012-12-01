@@ -9,13 +9,14 @@
 </head>
 <body>
     <h1> Swipe</h1>
-    <p> Sapiente put a bird on it fugiat officia sriracha stumptown ennui, jean shorts post-ironic. Veniam 8-bit terry richardson umami mustache, pork belly forage yr squid banksy laborum ethical. Fixie organic quinoa cupidatat blog ut. Ut velit skateboard, magna iphone organic minim high life mcsweeney's eu. Officia retro ea cosby sweater sapiente, PBR tumblr organic williamsburg commodo nesciunt 3 wolf moon duis do. Single-origin coffee laboris ad, stumptown PBR wolf brunch messenger bag irony cray tumblr pour-over pitchfork Austin. Farm-to-table occupy laboris banh mi aliquip, lomo fanny pack forage polaroid tumblr 3 wolf moon.
+    <p> Below you'll find an implementation of Swype; using one finger, maintain contact with the keyboard from the start of the word to finish, passing over the letters of your word.  This enables you to type more quickly than you could using discrete key taps. This works best for mobile devices, but also works with a mouse on a full-featured computer. This version of swipe will take the path your finger made on the image of the keyboard, and will interpret which keys you meant to hit and which were crossed incidentally.  If you have a double letter in your word, make a loop over it.  You can enter whole phrases or sentences here; just pick your finger up between words.  Try swipe out below; once you've finished your phrase or sentence, hit 'submit' and the results will send you to a google search of that phrase.
     </p>
     <h3 class="comment_title">Test it out yourself!</h3>
-    <div id="swipe_results" class="comment" onclick="add_keyboard()">
-    	<p><span id="word">Tap here to start typing.</span></p>
-    </div>
+    <div id="swipe_results">
+    	<div id="word" class="comment" onclick="add_keyboard()">Tap here to start typing.</div>
+    		<button id="search_button">Search</button>
 
+    </div>
     <div id="keyboard_container">
 	    <div id="keyboard_data_points" style="display: none;"></div>
 		<img id="keyboard" src="/static/img/ipad_keyboard.jpeg" width="790px" height="266px" style="display: none;">
@@ -32,6 +33,13 @@
 			$("#keyboard_container").addClass("show");
 			$(".comment").addClass("active")
 		}
+		$('#search_button').click(function() {
+			var base_url = 'http://www.google.com/search?q='
+			var uri = encodeURI(word)
+			var url = base_url + word
+			window.location = url
+			return false;
+		});
 	</script>
 </body>
 

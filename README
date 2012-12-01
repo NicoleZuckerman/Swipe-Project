@@ -3,7 +3,13 @@ A Swipe implementation, in-browser
 In CLI:
 python flask_for_touch_test.py
 
+** Requires Flask install **
+
 If using browser on mobile device (where swipe works best, in this case), make sure your mobile device is on the same network.
 
 in browser on computer: http://localhost:5000/
 in browser on mobile device: IP:5000
+
+To run on a computer, open developer tools.  In chrome, there's a gear, which will open 3 new tabs, one of which will let you enable touch events.  On a mobile device this isn't necessary.
+
+If the path tracked doesn't match the keys you planned to hit, go to /swipe_calibration, and re-calibrate the keyboard (using q, t, p, q, a, z positions).  fat-finger each key to get a good sample.
