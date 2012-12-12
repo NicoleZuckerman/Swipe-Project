@@ -1,11 +1,31 @@
+var surface;
+var ctx;
+var img;
 
-var swipe_info = [];
-var img = document.getElementById("keyboard");
+$(document).ready(function() {
+    var swipe_info = [];
 
-var surface = document.getElementById("my_canvas");
-var ctx = surface.getContext("2d");
-alert("keyboard")
-ctx.drawImage(img, 0, 0, 800, 276);
+    // var img = document.getElementById("keyboard");
+
+    surface = document.getElementById("my_canvas");
+    ctx = surface.getContext("2d");
+
+    img = new Image();   // Create new img element
+    img.onload = function(){
+      // execute drawImage statements here
+    ctx.drawImage(img, 0, 0, 800, 276);
+    };
+    img.src = "/static/img/ipad_keyboard.jpeg"; // Set source path
+
+    // alert("keyboard")
+    // ctx.drawImage(img, 0, 0, 800, 276);
+
+    surface.addEventListener("touchstart", start_swipe, false);
+
+    surface.addEventListener("touchmove", move, false);
+
+    surface.addEventListener("touchend", end_swipe, false);
+})
 
 function normalize(touch, timestamp) {
     var x_delta = touch.target.offsetLeft;
@@ -87,11 +107,4 @@ function drawDataPoints(swipe_dictionary_smoothed){
     ctx.closePath();
 
 }
-
-
-surface.addEventListener("touchstart", start_swipe, false);
-
-surface.addEventListener("touchmove", move, false);
-
-surface.addEventListener("touchend", end_swipe, false);
 

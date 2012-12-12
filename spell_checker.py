@@ -4,99 +4,34 @@ from get_letter_chosen import get_data_back
 def word_count(path_for_file):
     f = open(path_for_file)
     read = f.read()
-    
+    f.close()
     lowercased = read.lower()
     cleaned_words = clean_words(lowercased)
     word_dict = {}
 
     for word in cleaned_words:
         word_dict[word] = word_dict.get(word, 0) + 1
-    f.close()
-    # dict_file = open("seed_data/ENGLISH.txt", 'w')
-    # for key in word_dict.keys():
-    #     dict_entry = "%s \t %d \n" % (key, word_dict[key])
-    #     write = dict_file.write(dict_entry)
-    # dict_file.close()
     return word_dict
 
 def clean_words(lowercased_text):
-    # extraneous_characters = ',.-_:;?!"{}[]1234567890()@\#$%^&*+='
-    cleaned_text = re.sub('[,.-_:;?!"{}1234567890()@\#$%^&*+=]', ' ', lowercased_text)
-    # cleaned_text = lowercased_text.translate(' ', ',.-_:;?!"{}[]1234567890()@\#$%^&*+=')
+    cleaned_text = re.sub('[,._:;?!"{}1234567890()@\#$%^&*+=]-', ' ', lowercased_text)
     cleaned_text = cleaned_text.replace('--', ' ')
+
     cleaned_words = cleaned_text.split()
     return cleaned_words
 
 # ENGLISH_DICTIONARY = word_count("seed_data/words.txt")
 
-# def dict_to_tuple_list():
-#     key_value_list = []
-    
-#     for key, value in ENGLISH_DICTIONARY.iteritems():
-#         paired_info = (key, value)
-#         key_value_list.append(paired_info)
-#     # print key_value_list
-    
-#     return key_value_list
+# def create_dictionary(dictionary):
+#     g = open("seed_data/ENGLISH.txt", 'w')
+#     for key, value in dictionary.iteritems():
+#         row = "%s: \t%d \n" % (key, value)
+#         print row
+#         g.write(row)
+#     g.close()
 
-# def order_by_occurance():
-#     paired_list = dict_to_tuple_list()
-#     occurance_word_list = []
-    
-#     for item in paired_list:
-#         reversed_pair = (item[1], item[0])
-#         occurance_word_list.append(reversed_pair)
-    
-#     low_to_high_ordered = occurance_word_list.sort()
-#     high_to_low_ordered = occurance_word_list.reverse()
-#     # print occurance_word_list
-#     # f = open("seed_data/ENGLISH.txt", 'w')
+# do_it = create_dictionary(ENGLISH_DICTIONARY)
 
-#     for word in occurance_word_list:
-#         print "%d: \t%s \n" % (word[0], word[1])
-#     return occurance_word_list
-
-# def keyboard_conversion():
-#     keyboard = get_data_back('seed_data/user_keyboard.txt')
-#     key_locations = []
-#     for item in keyboard:
-#         letter = item['letter']
-#         x = item['x']
-#         y = item['y']
-#         # print "keyboard conversion-= letter %s, x %r, y %r" % (letter, x, y)
-#         key_info = (letter, x, y)
-#         key_locations.append(key_info)
-#     # print "key locations: %r" % key_locations
-#     return key_locations
-
-# def nearest_letters(word_fragment):
-#     keyboard = keyboard_conversion()
-#     # print "keyboard: %r" % keyboard
-#     chosen_letter = None
-#     letter = word_fragment[0]
-#     # print "letter is %s" % letter
-#     for key in keyboard:
-#         # print "key[0] is %s" % key[0]
-#         if key[0] == letter:
-#             chosen_letter = key
-#             # print "chosen letter is %r" % chosen_letter[0]
-
-#     possible_letters = []
-#     for letter_item in keyboard:
-#         letter_x = letter_item[1]
-#         letter_y = letter_item[2]
-#         letter = letter_item[0]
-#         distance = pow((chosen_letter[1] - letter_x), 2) + pow((chosen_letter[2] - letter_y), 2)
-#         distance_from_chosen = (distance, chosen_letter[0])
-#         possible_letters.append(distance_from_chosen)
-#     sorted_list = possible_letters.sort()
-#     best_choices = possible_letters[1:7]
-#     list_of_letter_options = []
-
-#     for choice in best_choices:
-#         list_of_letter_options.append(choice[1])
-#     letters_within_one_key = " ".join(list_of_letter_options)
-#     return letters_within_one_key
 def read_dictionary():
     f = open("seed_data/ENGLISH.txt")
     lines = f.readlines()
